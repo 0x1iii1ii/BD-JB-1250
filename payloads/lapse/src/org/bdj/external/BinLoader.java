@@ -59,9 +59,9 @@ public class BinLoader {
     private static void startInternal() {
         Status.println("=== BinLoader Starting ===");
 
-        // executeEmbeddedPayload(AIO_USBPAYLOAD_RESOURCE); // aio fix and usb payload
-        executeEmbeddedPayload(AIO_FIX_RESOURCE); // aio fix only
-        executeEmbeddedPayload(GOLDHEN_RESOURCE); // load goldhen from disc
+        executeEmbeddedPayload(AIO_USBPAYLOAD_RESOURCE); // aio fix and usb payload
+        // executeEmbeddedPayload(AIO_FIX_RESOURCE); // aio fix only
+        // executeEmbeddedPayload(GOLDHEN_RESOURCE); // load goldhen from disc
         listenForPayloadsOnPort(NETWORK_PORT);
     }
     

@@ -1,4 +1,4 @@
-JAR_NAME := Lapse.jar
+JAR_NAME := payload.jar
 
 MAKEFILE_DIR := $(dir $(realpath $(lastword $(MAKEFILE_LIST))))
 BDJSDK_HOME  ?= $(MAKEFILE_DIR)/../../../../
