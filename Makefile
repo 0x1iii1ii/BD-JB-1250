@@ -15,8 +15,9 @@
 # <http://www.gnu.org/licenses/>.
 
 
-DISC_LABEL := RemoteJarLoader
-
+DISC_LABEL := lapse
+BUILD_VERSION := 1.2
+DISC_NAME := $(DISC_LABEL)_v$(BUILD_VERSION)
 #
 # Host tools
 #
@@ -24,7 +25,7 @@ MAKEFILE_DIR := $(dir $(realpath $(lastword $(MAKEFILE_LIST))))
 BDJSDK_HOME  ?= $(MAKEFILE_DIR)/../../
 BDSIGNER     := $(BDJSDK_HOME)/host/bin/bdsigner
 MAKEFS       := $(BDJSDK_HOME)/host/bin/makefs
-JAVA8_HOME    ?= $(BDJSDK_HOME)/host/jdk8
+JAVA8_HOME   ?= $(BDJSDK_HOME)/host/jdk8
 JAVAC        := $(JAVA8_HOME)/bin/javac
 JAR          := $(JAVA8_HOME)/bin/jar
 
@@ -51,7 +52,7 @@ DISC_FILES := $(patsubst $(BDJSDK_HOME)/resources/AVCHD%,discdir%,$(TMPL_FILES))
               discdir/BDMV/JAR/00000.jar
 
 
-all: $(DISC_LABEL).iso
+all: $(DISC_NAME).iso
 
 
 discdir:
@@ -68,10 +69,10 @@ discdir/%: discdir
 	cp $(BDJSDK_HOME)/resources/AVCHD/$* $@
 
 
-$(DISC_LABEL).iso: $(DISC_FILES)
-	$(MAKEFS) -m 16m -t udf -o T=bdre,v=2.50,L=$(DISC_LABEL) $@ discdir
+$(DISC_NAME).iso: $(DISC_FILES)
+	$(MAKEFS) -m 16m -t udf -o T=bdre,v=2.50,L=$(DISC_NAME) $@ discdir
 
 
 clean:
-	rm -rf META-INF $(DISC_LABEL).iso discdir src/org/bdj/*.class src/org/bdj/sandbox/*.class src/org/bdj/api/*.class
+	rm -rf META-INF $(DISC_NAME).iso discdir src/org/bdj/*.class src/org/bdj/sandbox/*.class src/org/bdj/api/*.class
 

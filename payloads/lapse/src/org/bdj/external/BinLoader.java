@@ -27,8 +27,10 @@ public class BinLoader {
     private static final int NETWORK_PORT = 9020;
     private static final int READ_CHUNK_SIZE = 4096;
     
-    private static final String USBPAYLOAD_RESOURCE = "/org/bdj/external/aiofix_USBpayload.elf";
-    
+    private static final String AIO_USBPAYLOAD_RESOURCE = "/org/bdj/external/aiofix_USBpayload.elf";
+    private static final String AIO_FIX_RESOURCE = "/org/bdj/external/aiofix.elf";
+    private static final String GOLDHEN_RESOURCE = "/org/bdj/external/goldhen.bin";
+
     private static API api;
     private static byte[] binData;
     private static long mmapBase;
@@ -57,13 +59,15 @@ public class BinLoader {
     private static void startInternal() {
         Status.println("=== BinLoader Starting ===");
 
-        executeEmbeddedPayload();
+        // executeEmbeddedPayload(AIO_USBPAYLOAD_RESOURCE); // aio fix and usb payload
+        executeEmbeddedPayload(AIO_FIX_RESOURCE); // aio fix only
+        executeEmbeddedPayload(GOLDHEN_RESOURCE); // load goldhen from disc
         listenForPayloadsOnPort(NETWORK_PORT);
     }
     
-    private static void executeEmbeddedPayload() {
+    private static void executeEmbeddedPayload(String payloadPath) {
         try {
-            byte[] embeddedData = loadResourcePayload(USBPAYLOAD_RESOURCE);
+            byte[] embeddedData = loadResourcePayload(payloadPath);
             
             loadFromData(embeddedData);
             run();

@@ -2,7 +2,7 @@ JAR_NAME := Lapse.jar
 
 MAKEFILE_DIR := $(dir $(realpath $(lastword $(MAKEFILE_LIST))))
 BDJSDK_HOME  ?= $(MAKEFILE_DIR)/../../../../
-JAVA8_HOME    ?= $(BDJSDK_HOME)/host/jdk8
+JAVA8_HOME   ?= $(BDJSDK_HOME)/host/jdk8
 JAVAC        := $(JAVA8_HOME)/bin/javac
 JAR          := $(JAVA8_HOME)/bin/jar
 
@@ -12,12 +12,15 @@ CLASSPATH     := $(BDJSDK_HOME)/target/lib/enhanced-stubs.zip:$(BDJSDK_HOME)/tar
 SOURCES       := $(wildcard src/org/bdj/external/*.java)
 JFLAGS        := -Xlint:-options -source 1.4 -target 1.4
 
+BDJ_PATH      ?= $(BDJSDK_HOME)/samples/BD-JB-1250/src/org/bdj
+
 all: $(JAR_NAME)
 
-# Create JAR with manifest
+# Create jar with manifest and copy complied jar to bdj dir
 $(JAR_NAME): $(SOURCES) manifest.txt
 	$(JAVAC) $(JFLAGS) -cp $(CLASSPATH) $(SOURCES)
 	$(JAR) cfm $@ manifest.txt -C src/ .
+	mv $@ $(BDJ_PATH)
 
 clean:
 	rm -f src/org/bdj/external/*.class $(JAR_NAME)
